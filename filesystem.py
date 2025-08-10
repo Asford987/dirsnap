@@ -51,7 +51,7 @@ def scan_subdir(root: pathlib.Path, subdir: str) -> Iterator[FileEntry]:
 def filter_patterns(entries: Iterator[FileEntry], patterns: list[str]) -> Iterator[FileEntry]:
     if not patterns:
         return entries
-    return filter(lambda item: not any(fnmatch(item["relative_path"], pat) for pat in patterns), entries)
+    return filter(lambda item: not any(fnmatch(item["relative_path"], pat) for pat in patterns), entries) # TODO: CHANGE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 def read_first_bytes(entries: Iterator[FileEntry], num_bytes: int) -> Iterator[FileHead]:
     def probe(e: FileEntry) -> FileHead:

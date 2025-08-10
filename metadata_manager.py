@@ -100,32 +100,30 @@ def print_changes(diffs: MetaDiffs, verbosity: int, subdir: pathlib.Path):
             raise ValueError(f"verbosity value not supported: {verbosity}")
 
 def print_changes_v0(diffs: MetaDiffs):
-    emit = print
     consume = lambda it: deque(it, maxlen=0)
     consume(chain(
-        map(lambda p: emit(f"A {p}"), sorted(diffs["added"])),
-        map(lambda p: emit(f"M {p}"), sorted(diffs["modified"])),
-        map(lambda t: emit(f"R {t[0]} -> {t[1]}"), sorted(diffs["moved"])),
-        map(lambda p: emit(f"D {p}"), sorted(diffs["removed"])),
+        map(lambda p: print(f"A {p}"), sorted(diffs["added"])),
+        map(lambda p: print(f"M {p}"), sorted(diffs["modified"])),
+        map(lambda t: print(f"R {t[0]} -> {t[1]}"), sorted(diffs["moved"])),
+        map(lambda p: print(f"D {p}"), sorted(diffs["removed"])),
     ))
  
 
 def print_changes_v1(diffs: MetaDiffs, subdir: pathlib.Path):
-    emit = print
     consume = lambda it: deque(it, maxlen=0)
 
     header = lambda: consume((
-        emit(f"Directory: {subdir.resolve().as_posix()}"),
-        emit(f"Time: {datetime.now().isoformat()}"),
-        emit(""),
-    ) for _ in [None])
+        print(f"Directory: {subdir.resolve().as_posix()}"),
+        print(f"Time: {datetime.now().isoformat()}"),
+        print(""),
+    ) for _ in [None]) # TODO: CHANGE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     def section(title: str, items):
         return chain(
-            (emit(title) for _ in [None]) if items else (),
-            map(lambda x: emit(f"\t* {x[0]} -> {x[1]}") if isinstance(x, tuple) else emit(f"\t* {x}"),
+            (print(title) for _ in [None]) if items else (), # TODO: CHANGE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            map(lambda x: print(f"\t* {x[0]} -> {x[1]}") if isinstance(x, tuple) else print(f"\t* {x}"),
                 items),
-            (emit(""),) if items else ()
+            (print(""),) if items else ()
         )
 
     body = chain(
@@ -144,12 +142,12 @@ def print_changes_v1(diffs: MetaDiffs, subdir: pathlib.Path):
     total = sum(counts)
 
     summary = lambda: consume((
-        emit("Summary:"),
-        emit(f"{counts[0]} added, "
+        print("Summary:"),
+        print(f"{counts[0]} added, "
              f"{counts[1]} modified, "
              f"{counts[2]} moved, "
              f"{counts[3]} removed (total {total})"),
-    ) for _ in [None])
+    ) for _ in [None]) # TODO: CHANGE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     header()
     consume(body)      # realize body prints

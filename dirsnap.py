@@ -58,7 +58,7 @@ def main():
         
         consume = lambda it: deque(it, maxlen=0)
         
-        consume((print("No changes were made"),) for _ in [None]) if (not changed and args.verbosity > 0) else None
+        consume((print("No changes were made"),) for _ in [None]) if (not changed and args.verbosity > 0) else None # TODO: CHANGE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         sys.exit(1 if changed else 0)
     except Exception as e:
         print(f"Unexpected error: {e}")
